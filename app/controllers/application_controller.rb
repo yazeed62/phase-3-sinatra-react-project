@@ -8,9 +8,19 @@ class ApplicationController < Sinatra::Base
   end
 
   post "/tasks" do
-    task = Task.create(params)
-    task.to_json
+    task = Task.new(
+      title: params[:title],
+      description: params[:description],
+      category_id: params[:category_id]
+    )
+
+    if task.save
+      task.to_json
+    else
+      { error: 'Failed to create task' }.to_json
+    end
   end
+
 
   get "/tasks/:id" do
     task = Task.find(params[:id])
@@ -19,15 +29,24 @@ class ApplicationController < Sinatra::Base
 
   patch "/tasks/:id" do
     task = Task.find(params[:id])
-    task.update(params)
-    task.to_json
+     if task.update(
+         title: params[:title],
+         description: params[:description],
+         category_id: params[:category_id]
+       )
+      task.to_json
+    else
+      { error: 'Failed to update task' }.to_json
+    end
   end
 
   delete "/tasks/:id" do
     task = Task.find(params[:id])
-    task.destroy
-    { message: "Task deleted successfully" }.to_json
+    if task.destroy
+      { message: 'Task deleted successfully' }.to_json
+    else
+      { error: 'Failed to delete task' }.to_json
+    end
   end
-
 
 end
