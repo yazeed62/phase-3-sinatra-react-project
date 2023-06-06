@@ -22,6 +22,12 @@ class ApplicationController < Sinatra::Base
     task.update(params)
     task.to_json
   end
-  
+
+  delete "/tasks/:id" do
+    task = Task.find(params[:id])
+    task.destroy
+    { message: "Task deleted successfully" }.to_json
+  end
+
 
 end
