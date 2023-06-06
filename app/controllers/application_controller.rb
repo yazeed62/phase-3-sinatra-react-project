@@ -8,13 +8,20 @@ class ApplicationController < Sinatra::Base
   end
 
   post "/tasks" do
-    tasks = Task.create(params)
+    task = Task.create(params)
     task.to_json
   end
 
   get "/tasks/:id" do
-    tasks = Task.find(params[:id])
+    task = Task.find(params[:id])
     task.to_json
   end
+
+  patch "/tasks/:id" do
+    task = Task.find(params[:id])
+    task.update(params)
+    task.to_json
+  end
+  
 
 end
