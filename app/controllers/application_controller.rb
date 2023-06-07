@@ -10,9 +10,12 @@ class ApplicationController < Sinatra::Base
     tasks = Task.all
     tasks.to_json
   end
-
+ get "/categories" do
+    tasks = Category.all
+    tasks.to_json(include: :tasks)
+  end
   post "/tasks" do
-    task = Task.new(
+    task = Task.create(
       title: params[:title],
       description: params[:description],
       category_id: params[:category_id]
