@@ -1,5 +1,6 @@
 puts "🌱 Seeding spices..."
 
-# Seed your database here
+Task.destroy_all
+Category.destroy_all
 
 puts "✅ Done seeding!"
