@@ -18,10 +18,11 @@ class ApplicationController < Sinatra::Base
     task = Task.create(
       title: params[:title],
       description: params[:description],
-      category_id: params[:category_id]
+      completed: params[:completed],
+       category_id: params[:category_id]
     )
 
-    if task.save
+    if task
       task.to_json
     else
       { error: 'Failed to create task' }.to_json
@@ -45,6 +46,15 @@ class ApplicationController < Sinatra::Base
     else
       { error: 'Failed to update task' }.to_json
     end
+  end
+
+  patch "/tasks/:id/complete" do
+       task = Task.find(params[:id])
+       if task.update(completed: true)
+        task.to_json
+       else
+        { error: 'failed to update task' }.to_json
+       end
   end
 
   delete "/tasks/:id" do
