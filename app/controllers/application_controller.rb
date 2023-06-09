@@ -19,7 +19,7 @@ class ApplicationController < Sinatra::Base
       title: params[:title],
       description: params[:description],
       completed: params[:completed],
-       category_id: params[:category_id]
+       category_id: params[:categoryId]
     )
 
     if task
